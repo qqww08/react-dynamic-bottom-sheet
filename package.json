@@ -1,0 +1,115 @@
+{
+  "name": "react-dynamic-bottom-sheet",
+  "version": "0.0.1",
+  "description": "react-dynamic-bottom-sheet",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "homepage": "https://github.com/qqww08/react-dynamic-bottom-sheet",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "author": {
+    "name": "DaeHyun Shin",
+    "email": "qqwwee08@naver.com"
+  },
+  "keywords": [
+    "react",
+    "paymnet",
+    "password",
+    "keypad"
+  ],
+  "dependencies": {
+    "@types/react-transition-group": "^4.4.5",
+    "react-transition-group": "^4.4.5"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@swc/core": "^1.3.22",
+    "@types/node": "^18.0.5",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.4",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "react-scripts": "5.0.0",
+    "semantic-release": "^19.0.3",
+    "tsup": "^6.1.3",
+    "typescript": "^4.5.4"
+  },
+  "peerDependencies": {
+    "react": "^16.11.0 || ^17.0.0 || ^18.0.0"
+  },
+  "scripts": {
+    "watch": "npm run clean:dist && tsup src/index.ts --format esm,cjs --dts --external react --external react-dom --watch --ignore-watch src/example",
+    "build": "npm run clean:dist && tsup src/index.ts --format esm,cjs --dts --external react --external react-dom",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release",
+    "clean:dist": "rm -rf dist",
+    "start": "react-scripts start"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": [
+      "eslint"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qqww08/react-dynamic-bottom-sheet.git"
+  },
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/github",
+    "@semantic-release/npm",
+    "@semantic-release/git"
+  ],
+  "release": {
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      {
+        "path": "@semantic-release/git",
+        "assets": [
+          "package.json",
+          "package-lock.json",
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ]
+  }
+}
