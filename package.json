@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-bottom-sheet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react-dynamic-bottom-sheet",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -21,8 +21,8 @@
     "keypad"
   ],
   "dependencies": {
-    "@types/react-transition-group": "^4.4.5",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
@@ -31,6 +31,7 @@
     "@types/node": "^18.0.5",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/react-transition-group": "^4.4.5",
     "@types/styled-components": "^5.1.4",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",

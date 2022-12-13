@@ -27,7 +27,4 @@
     "**/*.tsx",
     "**/*.js"
   ],
-  "exclude": [
-    "src/example"
-  ]
 }

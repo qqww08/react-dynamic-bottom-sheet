@@ -1,1 +1,1 @@
-export { Drawer, type DrawerProps } from "./lib/Drawer";
+export * from "./lib/Drawer";

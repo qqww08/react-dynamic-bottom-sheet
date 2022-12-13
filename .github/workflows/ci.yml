@@ -2,7 +2,8 @@ name: Semantic release
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - master
 jobs:
   release:
     name: CI
