@@ -1,5 +1,6 @@
 import Drawer from "./lib/Drawer";
-import { DrawerProps, DrawerRefProps } from "./types";
+import type { DrawerProps, DrawerRefProps } from "./types";
 
 export default { Drawer };
-export { Drawer, type DrawerRefProps, type DrawerProps };
+export { Drawer };
+export type { DrawerRefProps, DrawerProps };
