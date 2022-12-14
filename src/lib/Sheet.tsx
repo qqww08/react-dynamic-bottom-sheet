@@ -12,7 +12,7 @@ import Portal from "./Portal";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import type { SheetProps, SheetRefProps, Position } from "../types";
-import { isMobile } from "../utils";
+import { isIOS, isMobile } from "../utils";
 
 const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: SheetProps, ref) => {
   const {
@@ -29,6 +29,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
   const [open, setOpen] = useState<boolean>(false);
   const [heightPosition, setHeightPosition] = useState(initialPosition);
   const sheetRef = useRef<HTMLDivElement | null>(null);
+  const sheetScrollRef = useRef<HTMLDivElement | null>(null);
 
   useLockBodyScroll();
   useImperativeHandle(ref, () => ({
@@ -57,11 +58,15 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     let startMouseClientY = 0;
     let moveClientY = 0;
     let drawerHeight = 0;
+    let isSheetLock = false;
+    let isScrollTopCount = 0;
+    let timer;
     const touchStart = (e) => {
       if (onStart) onStart();
+      isScrollTopCount = 0;
       drawerHeight = sheetRef.current!.offsetHeight;
       if (isMobile()) {
-        startMouseClientY = e.touches[0].clientY;
+        startMouseClientY = e.touches?.[0].clientY;
       } else {
         mouseEvent = true;
         startMouseClientY = e.clientY;
@@ -69,8 +74,18 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     };
     const touchmove = (e) => {
       if (onMove) onMove();
-
-      moveClientY = e.touches[0].clientY - startMouseClientY;
+      if (isSheetLock && sheetRef.current!.scrollTop <= 0) {
+        isScrollTopCount++;
+        if (isScrollTopCount > 4) {
+          isSheetLock = false;
+          sheetRef.current!.style.overflowY = `hidden`;
+        }
+      }
+      if (isSheetLock) {
+        sheetRef.current!.style.overflowY = `scroll`;
+        return;
+      }
+      moveClientY = e.touches?.[0].clientY - startMouseClientY;
       if (sheetRef.current) {
         sheetRef.current.style.height = `${drawerHeight - moveClientY + 10}px`;
         sheetRef.current.style.transition = `none 0s`;
@@ -78,7 +93,6 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     };
     const pointermove = (e) => {
       if (onMove) onMove();
-
       if (mouseEvent) {
         moveClientY = e.clientY - startMouseClientY;
         if (sheetRef.current) {
@@ -89,18 +103,22 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     };
     const touchend = () => {
       if (onEnd) onEnd();
+      isScrollTopCount = 0;
       if (sheetRef.current) {
-        const clientHeight = (document.querySelector(".dimmer") as HTMLDivElement).clientHeight;
+        const clientHeight = document.body.clientHeight;
         const drawerHeight = sheetRef.current.offsetHeight;
         const heightPercent = Math.floor((drawerHeight / clientHeight) * 100);
         mouseEvent = false;
         if (heightPercent > 50) {
           startMouseClientY = 0;
           moveClientY = 0;
-          sheetRef.current.style.height = `${maxHeight * 100}svh`;
+          sheetRef.current.style.height = `${maxHeight * 100}%`;
           sheetRef.current.style.transition = `500ms all`;
+          sheetRef.current.style.overflowY = `scroll`;
+          isSheetLock = true;
           return;
         }
+
         if (heightPercent < 15) {
           sheetRef.current.style.transition = `300ms all`;
 
@@ -108,19 +126,20 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
         }
         startMouseClientY = 0;
         moveClientY = 0;
-        sheetRef.current.style.height = `${defaultHeight * 100}svh`;
+        sheetRef.current.style.height = `${defaultHeight * 100}%`;
         sheetRef.current.style.transition = `300ms all`;
+        // sheetRef.current.style.overflowY = `hidden`;
       }
     };
     if (sheetRef.current) {
-      let initialHeight = `${(heightPosition === "max" ? maxHeight : defaultHeight) * 100}svh`;
+      let initialHeight = `${(heightPosition === "max" ? maxHeight : defaultHeight) * 100}%`;
       if (maxHeight > 1 || maxHeight < 0.5) {
-        new Error("`maxHeight` is at least 0.5 at most 1.");
-        initialHeight = "90svh";
+        console.log("`maxHeight` is at least 0.5 at most 1.");
+        initialHeight = `90%`;
       }
       if (defaultHeight > 0.5 || defaultHeight < 0.15) {
-        new Error("`defaultHeight` is at least 0.15 at most 0.5.");
-        initialHeight = "30svh";
+        console.log("`defaultHeight` is at least 0.15 at most 0.5.");
+        initialHeight = `30%`;
       }
       sheetRef.current.style.height = initialHeight;
       if (isMobile()) {
@@ -135,7 +154,13 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     }
     return () => {
       if (sheetRef.current) {
+        mouseEvent = false;
+        startMouseClientY = 0;
+        moveClientY = 0;
+        drawerHeight = 0;
+        isScrollTopCount = 0;
         setHeightPosition(initialPosition);
+        clearTimeout(timer);
         if (isMobile()) {
           sheetRef.current?.removeEventListener("touchstart", touchStart, false);
           containerEle!.removeEventListener("touchmove", touchmove, false);
@@ -159,16 +184,16 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
         <DimmerStyled className={`dimmer`} onClick={() => handleClose()} />
       </CSSTransition>
       <CSSTransition in={open} classNames="slide" unmountOnExit timeout={600}>
-        <SheetStyled ref={sheetRef}>
+        <SheetStyled ref={sheetRef} maxHeight={maxHeight}>
           <SheetHeaderStyled />
-          {children}
+          <SheetScrollStyled id={"sheet-scroll"}>{children}</SheetScrollStyled>
         </SheetStyled>
       </CSSTransition>
     </Portal>
   );
 };
 
-export const DimmerStyled = styled.div`
+const DimmerStyled = styled.div`
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
   position: fixed;
@@ -191,15 +216,17 @@ export const DimmerStyled = styled.div`
     transition: opacity 300ms ease-in;
   }
 `;
-export const SheetStyled = styled.div`
-  height: 30vh;
-  background: #fff;
-  position: absolute;
+const SheetStyled = styled.div<{ maxHeight: number }>`
+  max-height: ${(props) => props.maxHeight * 100}%;
+  position: fixed;
   z-index: 90;
   bottom: 0;
   left: 0;
   width: 100%;
+  background-color: #fff;
   border-radius: 30px 30px 0 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
   &.slide-enter {
     transform: translateY(2000px);
   }
@@ -216,12 +243,18 @@ export const SheetStyled = styled.div`
     transition: transform 500ms linear;
   }
 `;
-export const SheetHeaderStyled = styled.span`
-  position: relative;
+const SheetScrollStyled = styled.div`
+  background-color: #fff;
+`;
+const SheetHeaderStyled = styled.span`
+  position: sticky;
+  top: 0;
+  left: 0;
   display: inline-block;
   width: 100%;
   height: 20px;
-  transform: scaleY(2);
+  background-color: #fff;
+
   &:before {
     position: absolute;
     content: "";
