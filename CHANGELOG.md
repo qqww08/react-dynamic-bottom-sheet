@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.4...v1.0.5) (2022-12-14)
+
+
+### Bug Fixes
+
+* sheet 자잘한 버그 수정 ([c4cc728](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/c4cc7289b72204f8d1d2ad42414da654e34c60e8))
+
 ## [1.0.4](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.3...v1.0.4) (2022-12-14)
 
 
