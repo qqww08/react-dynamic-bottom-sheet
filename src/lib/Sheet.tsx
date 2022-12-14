@@ -135,6 +135,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     }
     return () => {
       if (sheetRef.current) {
+        setHeightPosition(initialPosition);
         if (isMobile()) {
           sheetRef.current?.removeEventListener("touchstart", touchStart, false);
           containerEle!.removeEventListener("touchmove", touchmove, false);
