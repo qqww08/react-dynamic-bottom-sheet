@@ -12,6 +12,7 @@ import Portal from "./Portal";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import type { SheetProps, SheetRefProps, Position } from "../types";
+import { isMobile } from "../utils";
 
 const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: SheetProps, ref) => {
   const {
@@ -26,6 +27,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     initialPosition = "default",
   } = props;
   const [open, setOpen] = useState<boolean>(false);
+  const [heightPosition, setHeightPosition] = useState(initialPosition);
   const sheetRef = useRef<HTMLDivElement | null>(null);
 
   useLockBodyScroll();
@@ -34,12 +36,8 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     defaultHeight,
     maxHeight,
     positionTo(position: Position) {
-      if (sheetRef.current) {
-        setOpen(true);
-        sheetRef.current.style.height = `${
-          (position === "max" ? maxHeight : defaultHeight) * 100
-        }svh`;
-      }
+      setHeightPosition(position);
+      setOpen(true);
     },
     onOpen() {
       setOpen(true);
@@ -55,7 +53,6 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
 
   useEffect(() => {
     const containerEle = document.querySelector("#drawer-portal");
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
     let mouseEvent = false;
     let startMouseClientY = 0;
     let moveClientY = 0;
@@ -63,7 +60,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     const touchStart = (e) => {
       if (onStart) onStart();
       drawerHeight = sheetRef.current!.offsetHeight;
-      if (isMobile) {
+      if (isMobile()) {
         startMouseClientY = e.touches[0].clientY;
       } else {
         mouseEvent = true;
@@ -97,7 +94,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
         const drawerHeight = sheetRef.current.offsetHeight;
         const heightPercent = Math.floor((drawerHeight / clientHeight) * 100);
         mouseEvent = false;
-        if (heightPercent > 60) {
+        if (heightPercent > 50) {
           startMouseClientY = 0;
           moveClientY = 0;
           sheetRef.current.style.height = `${maxHeight * 100}svh`;
@@ -116,17 +113,17 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
       }
     };
     if (sheetRef.current) {
-      let initialHeight = `${(initialPosition === "max" ? maxHeight : defaultHeight) * 100}svh`;
+      let initialHeight = `${(heightPosition === "max" ? maxHeight : defaultHeight) * 100}svh`;
       if (maxHeight > 1 || maxHeight < 0.5) {
-        console.error("`maxHeight` is at least 0.5 at most 1.");
+        new Error("`maxHeight` is at least 0.5 at most 1.");
         initialHeight = "90svh";
       }
       if (defaultHeight > 0.5 || defaultHeight < 0.15) {
-        console.error("`defaultHeight` is at least 0.15 at most 0.5.");
+        new Error("`defaultHeight` is at least 0.15 at most 0.5.");
         initialHeight = "30svh";
       }
       sheetRef.current.style.height = initialHeight;
-      if (isMobile) {
+      if (isMobile()) {
         sheetRef.current.addEventListener("touchstart", touchStart, false);
         sheetRef.current.addEventListener("touchmove", touchmove, false);
         sheetRef.current.addEventListener("touchend", touchend, false);
@@ -138,7 +135,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     }
     return () => {
       if (sheetRef.current) {
-        if (isMobile) {
+        if (isMobile()) {
           sheetRef.current?.removeEventListener("touchstart", touchStart, false);
           containerEle!.removeEventListener("touchmove", touchmove, false);
           sheetRef.current?.removeEventListener("touchend", touchend, false);
