@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.3...v1.0.4) (2022-12-14)
+
+
+### Bug Fixes
+
+* sheet 닫힌 후 position 초기화 ([768e832](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/768e83295f88221d6576a492e823573c8fe9f930))
+
 ## [1.0.3](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.2...v1.0.3) (2022-12-14)
 
 
