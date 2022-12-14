@@ -1,4 +1,4 @@
-# Installation
+### Installation
 ```shell
 # With npm
 npm install react-dynamic-bottom-sheet
@@ -9,7 +9,7 @@ yarn add react-dynamic-bottom-sheet
 # With pnpm
 pnpm install react-dynamic-bottom-sheet
 ```
-## Usage 
+### Usage 
 ```tsx
 import { Sheet } from "react-dynamic-bottom-sheet";
 import { useState } from 'react';
@@ -28,7 +28,7 @@ function Example() {
 }
 ```
 
-## Methods and properties
+### Methods and properties
 ```tsx
 import { Sheet, type DrawerRefProps} from "react-dynamic-bottom-sheet";
 import { useState } from 'react';
@@ -66,7 +66,7 @@ function Example() {
   );
 }
 ```
-## Props
+### Props
 
 | Prop           | Type             | Required? | Default Value | Description                                       |
 | -------------- |------------------|-------|---------------|---------------------------------------------------|
@@ -82,5 +82,5 @@ function Example() {
 
 
 
-## License
+### License
 MIT

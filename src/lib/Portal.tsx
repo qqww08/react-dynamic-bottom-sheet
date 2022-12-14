@@ -8,7 +8,7 @@ interface Props {
 
 const Portal = ({ children }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
     let element: HTMLDivElement | null = null;
