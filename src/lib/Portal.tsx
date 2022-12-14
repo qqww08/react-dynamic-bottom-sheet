@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 interface Props {
   children: ReactNode;
 }
+
 const Portal = ({ children }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [mounted, setMounted] = useState(false);

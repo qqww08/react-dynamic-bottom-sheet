@@ -11,9 +11,9 @@ import { useLockBodyScroll } from "./hooks";
 import Portal from "./Portal";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-import type { DrawerProps, DrawerRefProps, Position } from "../types";
+import type { SheetProps, SheetRefProps, Position } from "../types";
 
-const Drawer: ForwardRefRenderFunction<DrawerRefProps, DrawerProps> = (props: DrawerProps, ref) => {
+const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: SheetProps, ref) => {
   const {
     isVisible,
     onClose,
@@ -26,7 +26,7 @@ const Drawer: ForwardRefRenderFunction<DrawerRefProps, DrawerProps> = (props: Dr
     initialPosition = "default",
   } = props;
   const [open, setOpen] = useState<boolean>(false);
-  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const sheetRef = useRef<HTMLDivElement | null>(null);
 
   useLockBodyScroll();
   useImperativeHandle(ref, () => ({
@@ -34,10 +34,12 @@ const Drawer: ForwardRefRenderFunction<DrawerRefProps, DrawerProps> = (props: Dr
     defaultHeight,
     maxHeight,
     positionTo(position: Position) {
-      if (drawerRef.current)
-        drawerRef.current.style.height = `${
+      if (sheetRef.current) {
+        setOpen(true);
+        sheetRef.current.style.height = `${
           (position === "max" ? maxHeight : defaultHeight) * 100
         }svh`;
+      }
     },
     onOpen() {
       setOpen(true);
@@ -60,7 +62,7 @@ const Drawer: ForwardRefRenderFunction<DrawerRefProps, DrawerProps> = (props: Dr
     let drawerHeight = 0;
     const touchStart = (e) => {
       if (onStart) onStart();
-      drawerHeight = drawerRef.current!.offsetHeight;
+      drawerHeight = sheetRef.current!.offsetHeight;
       if (isMobile) {
         startMouseClientY = e.touches[0].clientY;
       } else {
@@ -72,9 +74,9 @@ const Drawer: ForwardRefRenderFunction<DrawerRefProps, DrawerProps> = (props: Dr
       if (onMove) onMove();
 
       moveClientY = e.touches[0].clientY - startMouseClientY;
-      if (drawerRef.current) {
-        drawerRef.current.style.height = `${drawerHeight - moveClientY + 10}px`;
-        drawerRef.current.style.transition = `none 0s`;
+      if (sheetRef.current) {
+        sheetRef.current.style.height = `${drawerHeight - moveClientY + 10}px`;
+        sheetRef.current.style.transition = `none 0s`;
       }
     };
     const pointermove = (e) => {
@@ -82,72 +84,72 @@ const Drawer: ForwardRefRenderFunction<DrawerRefProps, DrawerProps> = (props: Dr
 
       if (mouseEvent) {
         moveClientY = e.clientY - startMouseClientY;
-        if (drawerRef.current) {
-          drawerRef.current.style.height = `${drawerHeight - moveClientY}px`;
-          drawerRef.current.style.transition = `none 0s`;
+        if (sheetRef.current) {
+          sheetRef.current.style.height = `${drawerHeight - moveClientY}px`;
+          sheetRef.current.style.transition = `none 0s`;
         }
       }
     };
     const touchend = () => {
       if (onEnd) onEnd();
-      if (drawerRef.current) {
+      if (sheetRef.current) {
         const clientHeight = (document.querySelector(".dimmer") as HTMLDivElement).clientHeight;
-        const drawerHeight = drawerRef.current.offsetHeight;
+        const drawerHeight = sheetRef.current.offsetHeight;
         const heightPercent = Math.floor((drawerHeight / clientHeight) * 100);
         mouseEvent = false;
         if (heightPercent > 60) {
           startMouseClientY = 0;
           moveClientY = 0;
-          drawerRef.current.style.height = `${maxHeight * 100}svh`;
-          drawerRef.current.style.transition = `500ms all`;
+          sheetRef.current.style.height = `${maxHeight * 100}svh`;
+          sheetRef.current.style.transition = `500ms all`;
           return;
         }
         if (heightPercent < 15) {
-          drawerRef.current.style.transition = `300ms all`;
+          sheetRef.current.style.transition = `300ms all`;
 
           return handleClose();
         }
         startMouseClientY = 0;
         moveClientY = 0;
-        drawerRef.current.style.height = `${defaultHeight * 100}svh`;
-        drawerRef.current.style.transition = `300ms all`;
+        sheetRef.current.style.height = `${defaultHeight * 100}svh`;
+        sheetRef.current.style.transition = `300ms all`;
       }
     };
-    if (drawerRef.current) {
+    if (sheetRef.current) {
       let initialHeight = `${(initialPosition === "max" ? maxHeight : defaultHeight) * 100}svh`;
-      if (maxHeight > 1) {
-        console.error("The maximum of `maxHeight` is 1.");
+      if (maxHeight > 1 || maxHeight < 0.5) {
+        console.error("`maxHeight` is at least 0.5 at most 1.");
         initialHeight = "90svh";
       }
-      if (defaultHeight > 1) {
-        console.error("The maximum of `defaultHeight` is 1.");
+      if (defaultHeight > 0.5 || defaultHeight < 0.15) {
+        console.error("`defaultHeight` is at least 0.15 at most 0.5.");
         initialHeight = "30svh";
       }
-      drawerRef.current.style.height = initialHeight;
+      sheetRef.current.style.height = initialHeight;
       if (isMobile) {
-        drawerRef.current.addEventListener("touchstart", touchStart, false);
-        drawerRef.current.addEventListener("touchmove", touchmove, false);
-        drawerRef.current.addEventListener("touchend", touchend, false);
+        sheetRef.current.addEventListener("touchstart", touchStart, false);
+        sheetRef.current.addEventListener("touchmove", touchmove, false);
+        sheetRef.current.addEventListener("touchend", touchend, false);
       } else {
-        drawerRef.current.addEventListener("pointerdown", touchStart, false);
+        sheetRef.current.addEventListener("pointerdown", touchStart, false);
         containerEle!.addEventListener("pointermove", pointermove, false);
-        drawerRef.current.addEventListener("pointerup", touchend, false);
+        sheetRef.current.addEventListener("pointerup", touchend, false);
       }
     }
     return () => {
-      if (drawerRef.current) {
+      if (sheetRef.current) {
         if (isMobile) {
-          drawerRef.current?.removeEventListener("touchstart", touchStart, false);
+          sheetRef.current?.removeEventListener("touchstart", touchStart, false);
           containerEle!.removeEventListener("touchmove", touchmove, false);
-          drawerRef.current?.removeEventListener("touchend", touchend, false);
+          sheetRef.current?.removeEventListener("touchend", touchend, false);
         } else {
-          drawerRef.current?.removeEventListener("pointerdown", touchStart, false);
+          sheetRef.current?.removeEventListener("pointerdown", touchStart, false);
           containerEle!.removeEventListener("pointermove", pointermove, false);
-          drawerRef.current?.removeEventListener("pointerup", touchend, false);
+          sheetRef.current?.removeEventListener("pointerup", touchend, false);
         }
       }
     };
-  }, [open, drawerRef]);
+  }, [open, sheetRef]);
 
   useEffect(() => {
     setOpen(isVisible);
@@ -159,10 +161,10 @@ const Drawer: ForwardRefRenderFunction<DrawerRefProps, DrawerProps> = (props: Dr
         <DimmerStyled className={`dimmer`} onClick={() => handleClose()} />
       </CSSTransition>
       <CSSTransition in={open} classNames="slide" unmountOnExit timeout={600}>
-        <DrawerStyled ref={drawerRef}>
-          <DrawerHeaderStyled />
+        <SheetStyled ref={sheetRef}>
+          <SheetHeaderStyled />
           {children}
-        </DrawerStyled>
+        </SheetStyled>
       </CSSTransition>
     </Portal>
   );
@@ -191,7 +193,7 @@ export const DimmerStyled = styled.div`
     transition: opacity 300ms ease-in;
   }
 `;
-export const DrawerStyled = styled.div`
+export const SheetStyled = styled.div`
   height: 30vh;
   background: #fff;
   position: absolute;
@@ -216,7 +218,7 @@ export const DrawerStyled = styled.div`
     transition: transform 500ms linear;
   }
 `;
-export const DrawerHeaderStyled = styled.span`
+export const SheetHeaderStyled = styled.span`
   position: relative;
   display: inline-block;
   width: 100%;
@@ -234,4 +236,59 @@ export const DrawerHeaderStyled = styled.span`
     border-radius: 10px;
   }
 `;
-export default forwardRef(Drawer);
+/**
+ * @example1
+ * import { Sheet } from "react-dynamic-bottom-sheet";
+ * import { useState } from 'react';
+ *
+ * function Example() {
+ *   const [isOpen, setOpen] = useState(false);
+ *
+ *   return (
+ *     <>
+ *       <button onClick={() => setOpen(true)}>Open sheet</button>
+ *       <Sheet isVisible={isOpen} onClose={()=>setOpen(false)}>
+ *            <Your Component/>
+ *       </Sheet>
+ *     </>
+ *   );
+ * }
+ *
+ * @example2
+ * import { Sheet, type DrawerRefProps} from "react-dynamic-bottom-sheet";
+ * import { useState } from 'react';
+ *
+ * function Example() {
+ *   const [isOpen, setOpen] = useState(false);
+ *   const ref = useRef<DrawerRefProps>(null);
+ *
+ *   // 시트가 열리는 func
+ *   const handleDrawerOpen = () => {
+ *       ref.current.onOpen()
+ *   }
+ *
+ *   // 시트가 닫히는 func
+ *   const handleDrawerClose = () => {
+ *       ref.current.onClose()
+ *   }
+ *   // 해당 시트 포지션으로 시트가 열립니다.
+ *   const handleDrawerChange = () => {
+ *       ref.current.positionTo("max") // default or max
+ *   }
+ *   console.log(ref.current.isVisible); // sheet open 여부
+ *   console.log(ref.current.maxHeight); // maxHeight
+ *   console.log(ref.current.defaultHeight); // defaultHeight
+ *
+ *   return (
+ *     <>
+ *       <button onClick={() => handleDrawerOpen()}>SHEET OPEN</button>
+ *       <button onClick={() => handleDrawerClose()}>SHEET CLOSE</button>
+ *       <button onClick={() => handleDrawerClose()}>SHEET POSITION CHANGE</button>
+ *       <Sheet isVisible={isOpen} onClose={()=>setOpen(false)}>
+ *           <Your Component/>
+ *       </Sheet>
+ *     </>
+ *   );
+ * }
+ * */
+export default forwardRef(Sheet);
