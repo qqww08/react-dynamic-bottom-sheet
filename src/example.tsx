@@ -4,9 +4,8 @@ import Sheet from "./index";
 function Example() {
   const [state, setState] = useState(false);
   return (
-    <div className="App">
-      <button onClick={() => setState(true)}>asd</button>
-      <Sheet isVisible edgeHeight={0.15} onClose={() => setState(false)} initialPosition={"edge"}>
+    <div className="App" style={{ background: "#ccc" }}>
+      <Sheet isVisible edgeHeight={0.1} onClose={() => setState(false)} initialPosition={"edge"}>
         asdasdsadsad
       </Sheet>
       <header className="App-header">

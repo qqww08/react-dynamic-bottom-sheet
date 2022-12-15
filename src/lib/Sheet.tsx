@@ -52,7 +52,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
   }));
   const handleClose = () => {
     setOpen(false);
-    if (open) onClose();
+    if (open && onClose) onClose();
   };
 
   useEffect(() => {
