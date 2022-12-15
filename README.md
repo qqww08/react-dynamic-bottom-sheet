@@ -68,6 +68,30 @@ function Example() {
   );
 }
 ```
+
+### Edge Sheet
+![ezgif-4-0e1680939e](https://user-images.githubusercontent.com/62181345/207778374-0e74f104-1967-413b-a301-24e1677832c5.gif)
+
+```tsx
+import React, { useState } from "react";
+import { Sheet, type DrawerRefProps} from "react-dynamic-bottom-sheet";
+
+function Example() {
+    const [state, setState] = useState(false);
+    return (
+        <div className="App" style={{ background: "#ccc", height: "100vh" }}>
+            <Sheet isVisible edgeHeight={0.1} onClose={() => setState(false)} initialPosition={"edge"}>
+                <YOUR_COMPONENT>
+            </Sheet>
+            <header className="App-header">
+                <p>
+                    Edit <code>src/Example.js</code> and save to reload.
+                </p>
+            </header>
+        </div>
+    );
+}
+```
 ### Props
 
 | Prop           | Type             | Required? | Default Value | Description                                       |

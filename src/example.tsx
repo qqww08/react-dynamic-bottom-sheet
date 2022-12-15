@@ -4,7 +4,7 @@ import Sheet from "./index";
 function Example() {
   const [state, setState] = useState(false);
   return (
-    <div className="App" style={{ background: "#ccc" }}>
+    <div className="App" style={{ background: "#ccc", height: "100vh" }}>
       <Sheet isVisible edgeHeight={0.1} onClose={() => setState(false)} initialPosition={"edge"}>
         asdasdsadsad
       </Sheet>
