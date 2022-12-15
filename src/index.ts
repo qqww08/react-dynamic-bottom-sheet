@@ -1,5 +1,5 @@
 import Sheet from "./lib/Sheet";
 
-export { Sheet };
+export default Sheet;
 
 export type { SheetRefProps, SheetProps } from "./types";

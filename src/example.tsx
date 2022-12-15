@@ -1,24 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-import { Sheet } from "./index";
+import Sheet from "./index";
 function Example() {
+  const [state, setState] = useState(false);
   return (
     <div className="App">
-      <Sheet isVisible onClose={() => console.log(1)}>
-        asd
+      <button onClick={() => setState(true)}>asd</button>
+      <Sheet isVisible edgeHeight={0.15} onClose={() => setState(false)} initialPosition={"edge"}>
+        asdasdsadsad
       </Sheet>
       <header className="App-header">
         <p>
           Edit <code>src/Example.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );

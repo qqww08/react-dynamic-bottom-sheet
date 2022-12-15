@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type Position = "default" | "max";
+export type Position = "default" | "max" | "edge";
 
 interface SheetType {
   /**
@@ -11,7 +11,7 @@ interface SheetType {
   /**
    *   sheet close func
    * */
-  onClose: () => void;
+  onClose?: () => void;
   /**
    *   sheet defaultHeight
    * */
@@ -20,16 +20,16 @@ interface SheetType {
    *   sheet maxHeight
    * */
   maxHeight?: number;
+  /**
+   *   sheet edgeHeight
+   * */
+  edgeHeight?: number | undefined;
 }
 export interface SheetRefProps extends SheetType {
   /**
    *   sheet를 여는 func
    * */
   onOpen: () => void;
-  /**
-   *   sheet를 닫는 func
-   * */
-  onClose: () => void;
   /**
    *   sheet 포지션을 선택해서 여는 func
    * */

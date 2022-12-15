@@ -13,12 +13,14 @@ import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import type { Position, SheetProps, SheetRefProps } from "../types";
 import { isMobile } from "../utils";
+import { isNumber } from "../utils/isNumber";
 
 const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: SheetProps, ref) => {
   const {
     isVisible,
     onClose,
     children,
+    edgeHeight,
     defaultHeight = 0.3,
     maxHeight = 0.9,
     onStart,
@@ -26,13 +28,15 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     onEnd,
     initialPosition = "default",
   } = props;
+  const isEdge = isNumber(edgeHeight);
   const [open, setOpen] = useState<boolean>(false);
-  const [heightPosition, setHeightPosition] = useState(initialPosition);
+  const [heightPosition, setHeightPosition] = useState<Position>(initialPosition);
   const sheetRef = useRef<HTMLDivElement | null>(null);
 
   useLockBodyScroll();
   useImperativeHandle(ref, () => ({
     isVisible: open,
+    edgeHeight,
     defaultHeight,
     maxHeight,
     positionTo(position: Position) {
@@ -48,18 +52,16 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
   }));
   const handleClose = () => {
     setOpen(false);
-    if (isVisible) onClose();
+    if (open) onClose();
   };
 
   useEffect(() => {
-    const containerEle = document.querySelector("#drawer-portal");
     let mouseEvent = false;
     let startMouseClientY = 0;
     let moveClientY = 0;
     let drawerHeight = 0;
     let isSheetLock = false;
     let isScrollTopCount = 0;
-    let timer;
     const touchStart = (e) => {
       if (onStart) onStart();
       isScrollTopCount = 0;
@@ -92,6 +94,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     };
     const pointermove = (e) => {
       if (onMove) onMove();
+
       if (mouseEvent) {
         moveClientY = e.clientY - startMouseClientY;
         if (sheetRef.current) {
@@ -102,6 +105,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     };
     const touchend = () => {
       if (onEnd) onEnd();
+
       isScrollTopCount = 0;
       if (sheetRef.current) {
         const clientHeight = document.body.clientHeight;
@@ -118,8 +122,12 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
           return;
         }
 
-        if (heightPercent < 15) {
-          sheetRef.current.style.transition = `300ms all`;
+        if (heightPercent <= 15) {
+          if (isEdge) {
+            sheetRef.current.style.height = `${edgeHeight * 100}%`;
+            sheetRef.current.style.transition = `300ms all`;
+            return;
+          }
 
           return handleClose();
         }
@@ -127,18 +135,32 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
         moveClientY = 0;
         sheetRef.current.style.height = `${defaultHeight * 100}%`;
         sheetRef.current.style.transition = `300ms all`;
-        // sheetRef.current.style.overflowY = `hidden`;
       }
     };
     if (sheetRef.current) {
-      let initialHeight = `${(heightPosition === "max" ? maxHeight : defaultHeight) * 100}%`;
-      if (maxHeight > 1 || maxHeight < 0.5) {
-        console.log("`maxHeight` is at least 0.5 at most 1.");
-        initialHeight = `90%`;
-      }
-      if (defaultHeight > 0.5 || defaultHeight < 0.15) {
-        console.log("`defaultHeight` is at least 0.15 at most 0.5.");
-        initialHeight = `30%`;
+      let initialHeight = "";
+
+      switch (heightPosition) {
+        case "max":
+          initialHeight = `${maxHeight * 100}%`;
+          if (maxHeight > 1 || maxHeight < 0.5) {
+            console.error("`maxHeight` is at least 0.5 at most 1.");
+            initialHeight = `90%`;
+          }
+          break;
+        case "edge":
+          initialHeight = `${(edgeHeight ?? 0.15) * 100}%`;
+          if (isEdge && (edgeHeight > 0.5 || edgeHeight < 0.15)) {
+            console.error("`edgeHeight` is max 0.15");
+            initialHeight = `15%`;
+          }
+          break;
+        default:
+          initialHeight = `${defaultHeight * 100}%`;
+          if (defaultHeight > 0.5 || defaultHeight < 0.15) {
+            console.error("`defaultHeight` is at least 0.15 at most 0.5.");
+            initialHeight = `30%`;
+          }
       }
       sheetRef.current.style.height = initialHeight;
       if (isMobile()) {
@@ -147,7 +169,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
         sheetRef.current.addEventListener("touchend", touchend, false);
       } else {
         sheetRef.current.addEventListener("pointerdown", touchStart, false);
-        containerEle!.addEventListener("pointermove", pointermove, false);
+        document.body!.addEventListener("pointermove", pointermove, false);
         sheetRef.current.addEventListener("pointerup", touchend, false);
       }
     }
@@ -159,14 +181,13 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
         drawerHeight = 0;
         isScrollTopCount = 0;
         setHeightPosition(initialPosition);
-        clearTimeout(timer);
         if (isMobile()) {
-          sheetRef.current?.removeEventListener("touchstart", touchStart, false);
-          containerEle!.removeEventListener("touchmove", touchmove, false);
-          sheetRef.current?.removeEventListener("touchend", touchend, false);
+          sheetRef.current.removeEventListener("touchstart", touchStart, false);
+          sheetRef.current.removeEventListener("touchmove", touchmove, false);
+          sheetRef.current.removeEventListener("touchend", touchend, false);
         } else {
           sheetRef.current?.removeEventListener("pointerdown", touchStart, false);
-          containerEle!.removeEventListener("pointermove", pointermove, false);
+          document.body!.removeEventListener("pointermove", pointermove, false);
           sheetRef.current?.removeEventListener("pointerup", touchend, false);
         }
       }
@@ -179,7 +200,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
 
   return (
     <Portal>
-      <CSSTransition in={open} classNames="fade" unmountOnExit timeout={500}>
+      <CSSTransition in={!isEdge && open} classNames="fade" unmountOnExit timeout={500}>
         <DimmerStyled className={`dimmer`} onClick={() => handleClose()} />
       </CSSTransition>
       <CSSTransition in={open} classNames="slide" unmountOnExit timeout={600}>
@@ -216,6 +237,8 @@ const DimmerStyled = styled.div`
   }
 `;
 const SheetStyled = styled.div<{ maxHeight: number }>`
+  box-shadow: rgb(0 0 0 / 20%) 0px 8px 10px -5px, rgb(0 0 0 / 14%) 0px 16px 24px 2px,
+    rgb(0 0 0 / 12%) 0px 6px 30px 5px;
   max-height: ${(props) => props.maxHeight * 100}%;
   position: fixed;
   z-index: 90;
@@ -320,5 +343,18 @@ const SheetHeaderStyled = styled.span`
  *     </>
  *   );
  * }
+ * @example shhet가 전부 닫히지 않고 가장자리가 보이도록 구성
+ *   return (
+ *     <div className="App">
+ *       <Sheet isVisible edgeHeight={0.15} initialPosition={"edge"}>
+ *         Edge Component
+ *       </Sheet>
+ *       <header className="App-header">
+ *         <p>
+ *           Edit <code>src/Example.js</code> and save to reload.
+ *         </p>
+ *       </header>
+ *     </div>
+ *   );
  * */
 export default forwardRef(Sheet);
