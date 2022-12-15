@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.5...v1.0.6) (2022-12-14)
+
+
+### Bug Fixes
+
+* remove yarnrc.yml ([354bfc5](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/354bfc5bcb81c7ec7f5636bfcfcc4157ada63bb1))
+
 ## [1.0.5](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.4...v1.0.5) (2022-12-14)
 
 
