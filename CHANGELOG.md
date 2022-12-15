@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.6...v1.1.0) (2022-12-15)
+
+
+### Bug Fixes
+
+* 타입 에러 수정 ([582947f](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/582947feac09a6e8a6befc3eec5d10188d39aab8))
+
+
+### Features
+
+* add sheet 가 완전히 닫히지 않고 가장자리에 남을 수 있도록 기능 추가 ([ae9817c](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/ae9817ce4829745e60aa07c27d5272982fbba7a4))
+
 ## [1.0.6](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.5...v1.0.6) (2022-12-14)
 
 
