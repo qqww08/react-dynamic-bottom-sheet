@@ -14,7 +14,7 @@ const Portal = ({ children }: Props) => {
     let element: HTMLDivElement | null = null;
     if (!ref.current) {
       element = document.createElement("div") as HTMLDivElement;
-      element.setAttribute("id", "drawer-portal");
+      element.setAttribute("id", "sheet-portal");
       document.body.appendChild(element);
       (ref.current as any) = element;
       setMounted(true);

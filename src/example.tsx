@@ -5,7 +5,7 @@ function Example() {
   const [state, setState] = useState(false);
   return (
     <div className="App" style={{ background: "#ccc", height: "100vh" }}>
-      <Sheet isVisible edgeHeight={0.1} onClose={() => setState(false)} initialPosition={"edge"}>
+      <Sheet isVisible onClose={() => setState(false)}>
         asdasdsadsad
       </Sheet>
       <header className="App-header">
