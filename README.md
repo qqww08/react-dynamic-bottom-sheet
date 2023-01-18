@@ -61,7 +61,7 @@ function Example() {
       <button onClick={() => handleDrawerOpen()}>SHEET OPEN</button>
       <button onClick={() => handleDrawerClose()}>SHEET CLOSE</button>
       <button onClick={() => handleDrawerClose()}>SHEET POSITION CHANGE</button>
-      <Sheet isVisible={isOpen} onClose={()=>setOpen(false)}>
+      <Sheet isVisible={isOpen} onClose={()=>setOpen(false)} ref={ref}>
         <Your_Component/>
       </Sheet>
     </>
