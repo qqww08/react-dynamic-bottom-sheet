@@ -13,7 +13,7 @@ pnpm install react-dynamic-bottom-sheet
 ```
 ### Usage 
 ```tsx
-import { Sheet } from "react-dynamic-bottom-sheet";
+import Sheet from "react-dynamic-bottom-sheet";
 import { useState } from 'react';
 
 function Example() {
@@ -32,7 +32,7 @@ function Example() {
 
 ### Methods and properties
 ```tsx
-import { Sheet, type DrawerRefProps} from "react-dynamic-bottom-sheet";
+import Sheet, { type DrawerRefProps} from "react-dynamic-bottom-sheet";
 import { useState } from 'react';
 
 function Example() {
@@ -74,7 +74,7 @@ function Example() {
 
 ```tsx
 import React, { useState } from "react";
-import { Sheet, type DrawerRefProps} from "react-dynamic-bottom-sheet";
+import Sheet, { type DrawerRefProps} from "react-dynamic-bottom-sheet";
 
 function Example() {
     const [state, setState] = useState(false);
