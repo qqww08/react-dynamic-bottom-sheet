@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.1.3...v1.1.4) (2023-01-20)
+
+
+### Bug Fixes
+
+* edge component 스크롤 락 버그 수정 ([8f60dc8](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/8f60dc8b2117c1de332deca62992bc563a853cc7))
+
 ## [1.1.3](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.1.2...v1.1.3) (2023-01-20)
 
 
