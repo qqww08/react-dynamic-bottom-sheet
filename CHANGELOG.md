@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.1.2...v1.1.3) (2023-01-20)
+
+
+### Bug Fixes
+
+* 시멘틱 릴리즈 버그 수정 ([c3a9603](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/c3a96031ff5b64dce37f3bee9f11eaf8428b7416))
+
 # [1.1.0](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.6...v1.1.0) (2022-12-15)
 
 
