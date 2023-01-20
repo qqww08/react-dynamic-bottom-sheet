@@ -98,9 +98,9 @@ function Example() {
 | -------------- |-----------------------|-----------|---------------|----------------------------------------------------------------------------------------|
 | children      | `ReactNode`           | o         | -             |                                                                                        |
 | isVisible        | `boolean`             | o         | false         | sheet가 열려 있는지 여부를 알려주는 props                                                           |
-| defaultHeight        | `number`              | x         | 0.3           | sheet 기본 높이, 높이는 0.15 ~ 0.5 제한 입니다.                                                    |
-| edgeHeight        | `number or undefined` | x          | -             | edgeHeight 를 Props로 넘길 경우 sheet를 닫아도 가장자리에 Sheet가 닫히지 않고 남아 있습니다. 높이는 0 ~ 0.15 제한 입니다. |
-| maxHeight        | `number`              | x         | 0.9           | sheet 최대 높이, 높이는 0.5 ~ 1 제한 입니다.                                                       |
+| defaultHeight        | `number`              | x         | 0.3           | sheet 기본 높이, 높이는 0.15 ~ 0.5 제한 입니다. 제한치를 넘을 경우 경고 문구와 함께 default value로 반환 됩니다.                                                    |
+| edgeHeight        | `number or undefined` | x          | -             | edgeHeight 를 Props로 넘길 경우 sheet를 닫아도 가장자리에 Sheet가 닫히지 않고 남아 있습니다. 높이는 0 ~ 0.15 제한 입니다. 제한치를 넘을 경우 경고 문구와 함께 default value로 반환 됩니다. |
+| maxHeight        | `number`              | x         | 0.9           | sheet 최대 높이, 높이는 0.5 ~ 1 제한 입니다. 제한치를 넘을 경우 경고 문구와 함께 default value로 반환 됩니다.                                                       |
 | onClose        | `function`            | x         | -             | sheet 가 닫혔을 때의 callback function                                                       |
 | onStart        | `function`            | x         | -             | sheet 에 touch(pointer)가 시작 되었을떄의 callback function                                     |
 | onMove       | `function`            | x         | -             | sheet 가 움직일 떄의 callback function                                                       |
