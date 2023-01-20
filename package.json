@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-bottom-sheet",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "react-dynamic-bottom-sheet",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
