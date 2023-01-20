@@ -1,8 +1,9 @@
 // SSR 지원
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 
-export const useLockBodyScroll = (isVisible): void => {
-  useIsomorphicLayoutEffect((): (() => void) => {
+export const useLockBodyScroll = ({ isVisible, isEdge }): void => {
+  useIsomorphicLayoutEffect((): (() => void) | undefined => {
+    if (isEdge) return;
     const originalStyle = window.getComputedStyle(document.body).overflow;
 
     if (isVisible) {
