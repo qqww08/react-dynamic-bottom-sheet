@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sheet from "../../src";
+import Sheet from "react-dynamic-bottom-sheet";
 import { ArgsTable, PRIMARY_STORY, Stories, Title } from "@storybook/addon-docs";
 import { ComponentMeta } from "@storybook/react";
 import CodeMirror from "@uiw/react-codemirror";
