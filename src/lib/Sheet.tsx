@@ -33,7 +33,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
   const [heightPosition, setHeightPosition] = useState<Position>(initialPosition);
   const sheetRef = useRef<HTMLDivElement | null>(null);
 
-  useLockBodyScroll();
+  useLockBodyScroll(open);
   useImperativeHandle(ref, () => ({
     isVisible: open,
     edgeHeight,
