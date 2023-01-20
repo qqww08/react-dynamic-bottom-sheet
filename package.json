@@ -9,10 +9,14 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run clean:dist && tsup src/index.ts --format esm,cjs --dts --external react --external react-dom",
+    "watch": "tsup src/index.ts --watch",
     "prepare": "husky install",
     "semantic-release": "semantic-release",
     "clean:dist": "rm -rf dist",
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "docs:watch": "cd docs && sudo npm link ../ && npm run dev",
+    "docs:build": "cd docs && npm run build",
+    "serve-storybook": "cd docs && serve storybook-static"
   },
   "files": [
     "dist"
