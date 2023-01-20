@@ -4,8 +4,8 @@ import Sheet from "./index";
 function Example() {
   const [state, setState] = useState(false);
   return (
-    <div className="App" style={{ background: "#ccc", height: "100vh" }}>
-      <Sheet isVisible onClose={() => setState(false)}>
+    <div className="App">
+      <Sheet isVisible onClose={() => setState(false)} edgeHeight={0.1}>
         asdasdsadsad
       </Sheet>
       <header className="App-header">

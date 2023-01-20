@@ -1,0 +1,16 @@
+.box {
+  position: relative;
+}
+.button {
+  position: absolute;
+  width: 50px;
+  top: 0;
+  right: 0;
+  z-index: 80;
+}
+.left-btn {
+  right: 50px;
+}
+.active {
+  background-color: cornflowerblue;
+}

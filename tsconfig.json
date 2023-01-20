@@ -3,11 +3,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -19,15 +15,8 @@
     "strict": true,
     "target": "ESNext",
     "baseUrl": ".",
-    "noEmitOnError": true,
+    "noEmitOnError": true
   },
-  "include": [
-    "src",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js"
-  ],
-  "exclude": [
-    "src/example"
-  ]
+  "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js"],
+  "exclude": ["src/example", "docs"]
 }
