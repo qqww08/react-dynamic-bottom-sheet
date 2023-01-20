@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.1.0...v1.1.1) (2023-01-20)
+
+
+### Bug Fixes
+
+* body scroll lock 버그 수정 ([bdc8c6c](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/bdc8c6c431794ea93f825fbfc40dc94f2bb4fb87))
+
 # [1.1.0](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.0.6...v1.1.0) (2022-12-15)
 
 
