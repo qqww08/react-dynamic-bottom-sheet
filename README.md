@@ -12,7 +12,7 @@ yarn add react-dynamic-bottom-sheet
 # With pnpm
 pnpm install react-dynamic-bottom-sheet
 ```
-### Usage 
+### Usage  
 ```tsx
 import Sheet from "react-dynamic-bottom-sheet";
 import { useState } from 'react';
