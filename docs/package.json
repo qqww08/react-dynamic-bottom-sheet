@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-dynamic-bottom-sheet": "^1.1.4"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@codemirror/lang-javascript": "^6.1.2",

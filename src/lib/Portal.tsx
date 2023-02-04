@@ -4,9 +4,10 @@ import { createPortal } from "react-dom";
 
 interface Props {
   children: ReactNode;
+  classname: string;
 }
 
-const Portal = ({ children }: Props) => {
+const Portal = ({ children, classname }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [mounted, setMounted] = useState<boolean>(false);
 
@@ -14,7 +15,7 @@ const Portal = ({ children }: Props) => {
     let element: HTMLDivElement | null = null;
     if (!ref.current) {
       element = document.createElement("div") as HTMLDivElement;
-      element.setAttribute("id", "sheet-portal");
+      element.setAttribute("id", `${classname}-portal`);
       document.body.appendChild(element);
       (ref.current as any) = element;
       setMounted(true);
