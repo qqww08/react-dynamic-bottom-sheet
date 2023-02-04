@@ -1,3 +1,18 @@
+# [2.0.0](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.1.4...v2.0.0) (2023-02-04)
+
+
+### Features
+
+* add sheet position props ([7f6fe6c](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/7f6fe6cf502ee44ad18a5e49080d6aba7c2fbe2b))
+
+
+### BREAKING CHANGES
+
+* change props
+1. Sheet Position 추가
+<Sheet sheetLimit={[15,50]}>
+2. positionTo props 제거
+
 ## [1.1.4](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.1.3...v1.1.4) (2023-01-20)
 
 
