@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v2.0.0...v2.0.1) (2023-04-23)
+
+
+### Bug Fixes
+
+* change querySelector selectors [#1](https://github.com/qqww08/react-dynamic-bottom-sheet/issues/1) ([95c59d1](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/95c59d1a9085fed2893ac998992ad67fb845f71e))
+
 # [2.0.0](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v1.1.4...v2.0.0) (2023-02-04)
 
 
