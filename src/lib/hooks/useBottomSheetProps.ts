@@ -90,7 +90,7 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
   const onTouchStart = (touchEvent: React.TouchEvent) => {
     if (!isTouchScreen || !ref.current) return null;
 
-    const sheetScroll = document.querySelector("#sheet-scroll") as HTMLDivElement;
+    const sheetScroll = document.querySelector(".sheet-scroll") as HTMLDivElement;
     if (sheetScroll.scrollTop > 0) return null;
 
     const { height } = ref.current.getBoundingClientRect();

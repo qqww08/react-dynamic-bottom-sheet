@@ -22,12 +22,16 @@ function Example() {
   // 시트가 열립니다
   // 해당 시트 포지션으로 시트가 열립니다.
   const handleSheetOpen = () => {
-    setState(false);
+      setOpen(true);
   };
+
+    const handleSheetClose = () => {
+        setOpen(false);
+    };
   return (
     <>
-      <button onClick={() => setOpen(true)}>Open sheet</button>
-      <Sheet isVisible={isOpen} onClose={()=>setOpen(false)}>
+      <button onClick={() => handleSheetOpen()}>Open sheet</button>
+      <Sheet isVisible={isOpen} onClose={()=>handleSheetClose()}>
          <Your_Component/>
       </Sheet>
     </>

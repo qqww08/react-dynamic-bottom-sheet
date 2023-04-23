@@ -4,13 +4,9 @@ import Sheet, { SheetProps } from "./index";
 
 function Example() {
   const [state, setState] = useState(false);
-  const handleSheetOpen = () => {
-    setState(false);
-  };
+
   const sheetProps: SheetProps = {
-    isVisible: true,
-    isEdge: true,
-    initialPosition: "edge",
+    isVisible: state,
     sheetLimit: [10, 50],
   };
 
