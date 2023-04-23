@@ -8,7 +8,7 @@
   "homepage": "https://github.com/qqww08/react-dynamic-bottom-sheet",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean:dist && tsup src/index.ts --format esm,cjs --dts --external react --external react-dom",
+    "build": "npm run clean:dist && tsup",
     "watch": "tsup src/index.ts --watch",
     "prepare": "husky install",
     "semantic-release": "semantic-release",

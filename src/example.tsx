@@ -7,19 +7,16 @@ function Example() {
 
   const sheetProps: SheetProps = {
     isVisible: state,
-    sheetLimit: [10, 50],
+    onClose: () => {
+      setState(false);
+    },
   };
 
   return (
     <div className="App">
       <button onClick={() => setState(true)}>OPEN</button>
       <Sheet {...sheetProps}>
-        asdasdsadsad
-        <header className="App-header" style={{ height: "100vh" }}>
-          <p>
-            Edit <code>src/Example.js</code> and save to reload.
-          </p>
-        </header>
+        <div />
       </Sheet>
     </div>
   );

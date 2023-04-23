@@ -13,7 +13,7 @@ const Sheet: ForwardRefRenderFunction<SheetRefProps, SheetProps> = (props: Sheet
     children,
     defaultHeight = 0.3,
     maxHeight = 0.9,
-    sheetLimit = [15, 50],
+    sheetLimit = [10, 50],
     zIndex = 100,
     initialPosition = "default",
     classname = "sheet",
