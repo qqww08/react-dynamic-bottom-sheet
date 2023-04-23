@@ -1,3 +1,11 @@
+## [2.0.2](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v2.0.1...v2.0.2) (2023-04-23)
+
+
+### Bug Fixes
+
+* change browser height ([2fa1a6e](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/2fa1a6ed61839044857d3b76dd62050a3487168d))
+* test ([a783d2f](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/a783d2f389e358c9569d11e5b1b769e7091c8c27))
+
 ## [2.0.1](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v2.0.0...v2.0.1) (2023-04-23)
 
 
