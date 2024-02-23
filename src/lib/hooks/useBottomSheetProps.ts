@@ -61,11 +61,7 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
     const clientHeight = window.innerHeight;
     const heightPercent = Math.floor((sheetHeight / clientHeight) * 100);
     const sheetScroll = document.querySelector(`.${classname}-scroll`) as HTMLDivElement;
-    console.log(64);
-    console.log(sheetHeight);
-    console.log(clientHeight);
-    console.log(heightPercent);
-    console.log(sheetLimit[0]);
+
     if (heightPercent > sheetLimit[1]) {
       sheetScroll.style.overflowY = "scroll";
       ref.current.style.height = `${maxHeight * 100}%`;
