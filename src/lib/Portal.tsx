@@ -1,4 +1,4 @@
-import * as React from "react";
+"use client";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -17,7 +17,7 @@ const Portal = ({ children, classname }: Props) => {
       element = document.createElement("div") as HTMLDivElement;
       element.setAttribute("id", `${classname}-portal`);
       document.body.appendChild(element);
-      (ref.current as any) = element;
+      ref.current = element;
       setMounted(true);
       return () => {
         setMounted(false);
@@ -28,7 +28,7 @@ const Portal = ({ children, classname }: Props) => {
   }, []);
 
   // SSR 지원
-  return mounted ? createPortal(children, ref.current as any) : null;
+  return mounted ? createPortal(children, ref.current as HTMLDivElement) : null;
 };
 
 export default Portal;

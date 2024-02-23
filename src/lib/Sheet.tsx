@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { forwardRef, ForwardRefRenderFunction, useImperativeHandle } from "react";
 import { useBottomSheetProps, useLockBodyScroll } from "./hooks";
@@ -108,7 +109,9 @@ const SheetStyled = styled.div<{
   isVisible: boolean;
   zIndex: number;
 }>`
-  box-shadow: rgb(0 0 0 / 20%) 0 8px 10px -5px, rgb(0 0 0 / 14%) 0px 16px 24px 2px,
+  box-shadow:
+    rgb(0 0 0 / 20%) 0 8px 10px -5px,
+    rgb(0 0 0 / 14%) 0px 16px 24px 2px,
     rgb(0 0 0 / 12%) 0px 6px 30px 5px;
   max-height: ${({ maxHeight }) => maxHeight * 100}%;
   position: fixed;
