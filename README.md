@@ -1,4 +1,3 @@
-<a href="https://react-dynamic-bottom-sheet.vercel.app/"><img width=15 src="https://user-images.githubusercontent.com/62181345/213732215-45f4f181-2256-4798-aead-9303529e3cae.png" /> Storybook</a>
 
 ![test](https://user-images.githubusercontent.com/62181345/207508460-45777460-64f2-44f9-afc1-4a2fdad4e909.gif)
 ### Installation
