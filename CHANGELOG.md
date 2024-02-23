@@ -1,3 +1,11 @@
+# [2.1.0](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v2.0.2...v2.1.0) (2024-02-23)
+
+
+### Features
+
+* app route supported ([6470287](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/647028706614198f3d0e098873fc7488fc80d93b))
+* ssr supported ([e07f626](https://github.com/qqww08/react-dynamic-bottom-sheet/commit/e07f626bb3912df75ab61933f987006b712c49d7))
+
 ## [2.0.2](https://github.com/qqww08/react-dynamic-bottom-sheet/compare/v2.0.1...v2.0.2) (2023-04-23)
 
 
