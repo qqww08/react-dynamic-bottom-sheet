@@ -4,7 +4,7 @@ import { isSSR } from "../../utils";
 
 export const useLockBodyScroll = ({ isVisible, isEdge }): void => {
   useIsomorphicLayoutEffect((): (() => void) | undefined => {
-    if (isEdge || isSSR) return;
+    if (isEdge || isSSR()) return;
     const originalStyle = window.getComputedStyle(document.body).overflow;
 
     if (isVisible) {
