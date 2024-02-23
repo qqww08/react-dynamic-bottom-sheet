@@ -1,5 +1,6 @@
 import React, { useState, useRef, MutableRefObject } from "react";
 import { Position, SheetLimit } from "../../types";
+import { isSSR } from "../../utils";
 
 export interface UseBottomReturnValue<TRef> {
   ref?: MutableRefObject<TRef | null>;
@@ -36,7 +37,8 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
 }: UseBottomSheetProps): UseBottomReturnValue<TRef> => {
   const ref = useRef<TRef | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const isTouchScreen = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  const isTouchScreen = () =>
+    !isSSR() && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
   const heightCalc = () => {
     switch (initialPosition) {
@@ -56,7 +58,7 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
   };
 
   const bottomSheetEnd = () => {
-    if (!ref.current) return;
+    if (!ref.current || isSSR()) return;
     const sheetHeight = ref.current?.clientHeight;
     const clientHeight = window.innerHeight;
     const heightPercent = Math.floor((sheetHeight / clientHeight) * 100);
@@ -88,7 +90,7 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
   };
 
   const onTouchStart = (touchEvent: React.TouchEvent) => {
-    if (!isTouchScreen || !ref.current) return null;
+    if (!isTouchScreen() || !ref.current || isSSR()) return null;
 
     const sheetScroll = document.querySelector(".sheet-scroll") as HTMLDivElement;
     if (sheetScroll.scrollTop > 0) return null;
@@ -96,7 +98,7 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
     const { height } = ref.current.getBoundingClientRect();
     if (onStart) onStart();
     const touchMoveHandler = (moveEvent: TouchEvent) => {
-      if (!ref.current) return;
+      if (!ref.current || isSSR()) return;
       if (onMove) onMove();
       const deltaY = moveEvent.touches[0].pageY - touchEvent.touches[0].pageY;
       ref.current.style.height = `${height - deltaY}px`;
@@ -113,7 +115,7 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
     document.addEventListener("touchend", touchEndHandler, { once: true });
   };
   const onMouseDown = (clickEvent: React.MouseEvent) => {
-    if (isTouchScreen || !ref.current) return null;
+    if (isTouchScreen() || !ref.current || isSSR()) return null;
     const { height } = ref.current.getBoundingClientRect();
     if (onStart) onStart();
 
@@ -121,7 +123,7 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
       return false;
     };
     const mouseMoveHandler = (moveEvent: MouseEvent) => {
-      if (!ref.current) return;
+      if (!ref.current || isSSR()) return;
       if (onMove) onMove();
       const deltaY = moveEvent.pageY - clickEvent.pageY;
       ref.current.style.height = `${height - deltaY}px`;
@@ -129,6 +131,8 @@ export const useBottomSheetProps = <TRef extends HTMLDivElement>({
     };
 
     const mouseUpHandler = () => {
+      if (isSSR()) return;
+
       bottomSheetEnd();
       document.removeEventListener("mousemove", mouseMoveHandler);
     };
